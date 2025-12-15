@@ -21,6 +21,11 @@ body {
   background-color: var(--background);
   color: var(--text-color);
   line-height: 1.6;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-45)"><rect x="9" y="2" width="6" height="18" fill="%23333" rx="3"/><circle cx="12" cy="2" r="2" fill="%23d22630"/></g></svg>') 12 4, auto;
+}
+
+.map-container {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-45)"><rect x="9" y="2" width="6" height="18" fill="%23d22630" rx="3"/><circle cx="12" cy="2" r="3" fill="%23FFD700"/></g></svg>') 12 4, auto;
 }
 
 /* Game Container */
@@ -41,6 +46,30 @@ body {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   margin-bottom: 20px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.csun-logo {
+  height: 60px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.csun-logo:hover {
+  transform: scale(1.05);
+}
+
+.header-text {
+  flex: 1;
+  min-width: 250px;
 }
 
 .game-header h1 {
@@ -102,6 +131,14 @@ body {
 
 .feedback .incorrect {
   color: var(--error-color);
+}
+
+.feedback .foul {
+  color: #FFA500;
+}
+
+.feedback .strikeout {
+  color: #9900CC;
 }
 
 /* Map Container */
@@ -197,6 +234,26 @@ body {
   background: rgba(220, 53, 69, 0.15);
   transform: translateX(5px);
   box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+}
+
+.answer-item.foul {
+  border-left: 4px solid #FFA500;
+}
+
+.answer-item.foul:hover {
+  background: rgba(255, 165, 0, 0.15);
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.2);
+}
+
+.answer-item.strikeout {
+  border-left: 4px solid #9900CC;
+}
+
+.answer-item.strikeout:hover {
+  background: rgba(153, 0, 204, 0.15);
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(153, 0, 204, 0.2);
 }
 
 .answer-number {
@@ -368,6 +425,31 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Field Reference Link */
+.field-reference {
+  text-align: center;
+  padding: 15px;
+  margin: 20px 0;
+  background: rgba(210, 38, 48, 0.1);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--primary-color);
+}
+
+.field-reference a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.field-reference a:hover {
+  color: white;
+  background: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: underline;
 }
 
 /* Footer */
