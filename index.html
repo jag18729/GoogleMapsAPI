@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CSUN Baseball Hitting Game - Hit it outside the field for HOMERUNS!"
+    />
+    <title>CSUN Baseball Hitting Game</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="game-container">
+      <!-- Header -->
+      <header class="game-header">
+        <h1>⚾ CSUN Baseball Hitting Game</h1>
+        <div class="game-stats">
+          <div id="score-display" class="stat-item">Homeruns: 0/5</div>
+          <div id="timer-display" class="stat-item">Time: 0:00</div>
+        </div>
+      </header>
+
+      <!-- Game Prompt -->
+      <div id="game-prompt" class="game-prompt">
+        <h2>Loading game...</h2>
+      </div>
+
+      <!-- Feedback Messages -->
+      <div id="feedback" class="feedback"></div>
+
+      <!-- Map Container -->
+      <div id="map" class="map-container"></div>
+
+      <!-- Results Modal (hidden initially) -->
+      <div id="results" class="results-modal" style="display: none"></div>
+
+      <!-- Loading Spinner -->
+      <div id="loading-spinner" class="loading-spinner" style="display: none">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+      <p>&copy; 2025 CSUN Baseball Hitting Game | COMP 484 Project</p>
+    </footer>
+
+    <!-- Google Maps API -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVzfl4RjTtr1k6A3wiASsrvQEyCtApERs&callback=initMap"
+      async
+      defer
+    ></script>
+
+    <!-- Application Scripts -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
