@@ -1,96 +1,62 @@
-# CSUN Baseball Hitting Game
+# ⚾ CSUN Baseball Hitting Game
 
-Interactive baseball game using Google Maps JavaScript API. Double-click on the map to hit baseballs - click **outside** the Matador Baseball Field for homeruns, **inside** for strikeouts, and **foul zones** for foul balls.
+Interactive baseball game on Google Maps. **Double-click outside the Matador Baseball Field = Homerun.** Inside = Strikeout. Foul zones = Foul ball.
 
-**Live:** https://jag18729.github.io/GoogleMapsAPI/
+**🎮 Play Now:** https://jag18729.github.io/GoogleMapsAPI/
 
 ---
 
-## Quick Start (Local Development)
+## ⚡ Quick Start (3 minutes)
 
 ```bash
-# 1. Clone and setup
 cd frontend
 bun install
-
-# 2. Create .env with your Google Maps API key
-echo "GOOGLE_MAPS_API_KEY=AIzaSy..." > .env
-
-# 3. Start dev server
+echo "GOOGLE_MAPS_API_KEY=AIza..." > .env
 bun run dev-server.js
 # Open http://localhost:3000
 ```
 
----
-
-## Game Features
-
-- **10 Hitting Challenges** - Test your accuracy at CSUN locations
-- **Dynamic Feedback** - Visual overlays + sound effects for each hit
-- **High Score Board** - Persistent leaderboard stored locally
-- **Responsive Design** - Works on mobile and desktop
-- **Professional Theming** - Baseball stadium atmosphere with CSUN branding
-
-### Game Mechanics
-- **Homerun (✓)** - Click outside field boundary = +1 point
-- **Strikeout (❌)** - Click inside field = 0 points
-- **Foul Ball (⚾)** - Click in foul zones (soccer field, buildings) = 0 points
-- **Timer** - Real-time game duration tracking
-- **Retry Button** - Play same locations with fresh attempts
+**Deploy:** `git push origin main` (GitHub Actions auto-deploys)
 
 ---
 
-## Tech Stack
+## 🎯 How to Play
 
-- **Runtime:** Bun 1.3+ (JavaScript runtime with integrated bundler)
-- **Frontend:** HTML5, CSS3, Vanilla JavaScript, jQuery
-- **Maps:** Google Maps JavaScript API
-- **Deployment:** GitHub Pages with GitHub Actions CI/CD
-- **Audio:** Web Audio API (browser-native sound synthesis)
-- **Encryption:** AES-256-GCM (optional, for API key security)
+| Action | Result |
+|--------|--------|
+| **Double-click OUTSIDE field** | ✅ Homerun (+1 point) |
+| **Double-click INSIDE field** | ❌ Strikeout (0 points) |
+| **Double-click foul zones** | ⚾ Foul Ball (0 points) |
+| **10 challenges** to beat your score |
+| **High scores** saved automatically |
 
 ---
 
-## Project Structure
+## 📦 What's Included
 
-```
-frontend/
-├── src/
-│   ├── index.html           # Main game interface
-│   ├── css/
-│   │   ├── styles.css       # Game styling + custom bat cursor
-│   │   └── animations.css   # 8+ CSS animations
-│   └── js/
-│       ├── main.js          # Game orchestrator
-│       ├── game.js          # Game state logic
-│       ├── map.js           # Google Maps integration
-│       ├── ui.js            # UI updates
-│       ├── timer.js         # Game timer
-│       ├── audio.js         # Sound effects
-│       ├── highscores.js    # LocalStorage scores
-│       └── locations.js     # 10 CSUN building coordinates
-├── scripts/
-│   ├── encrypt-key.ts       # Optional API key encryption
-│   └── decrypt-key.ts       # Decryption helper
-├── build.js                 # Bun build script
-├── dev-server.js            # Local development server
-└── package.json
+✅ Full baseball game with 10 CSUN locations
+✅ Real-time scoring & timer
+✅ Sound effects (bat crack, homerun, strikeout, foul, game over)
+✅ Custom bat cursor
+✅ 8+ CSS animations
+✅ Responsive mobile design
+✅ High score leaderboard (LocalStorage)
+✅ Secure API key handling
+✅ GitHub Pages deployment
+✅ GitHub Actions CI/CD automation
 
-.github/workflows/
-└── deploy.yml              # Automated GitHub Pages deployment
+---
 
-docs/
-├── README.md               # Documentation index
-├── API_SECURITY.md         # Security architecture
-├── BUN_ENCRYPTION_SETUP.md # Encryption guide (optional)
-└── ENCRYPTED_SECRETS.md    # Alternative encryption methods
+## 🛠 Build & Deploy
+
+### Local Development
+```bash
+cd frontend
+bun run dev-server.js
+# http://localhost:3000
 ```
 
----
-
-## Build & Deploy
-
-### Local Build
+### Build for Production
 ```bash
 cd frontend
 bun run build.js
@@ -102,28 +68,57 @@ bun run build.js
 git add .
 git commit -m "Update game"
 git push origin main
-# GitHub Actions auto-deploys
+# ✅ Automatically deployed!
 ```
 
 ---
 
-## API Key Security
+## 📁 Project Structure
 
-Your Google Maps API key is protected by:
+```
+frontend/
+├── src/
+│   ├── index.html          # Game interface
+│   ├── css/                # Styling + animations
+│   └── js/
+│       ├── main.js         # Game orchestrator
+│       ├── game.js         # Game state
+│       ├── map.js          # Google Maps
+│       ├── ui.js           # UI updates
+│       ├── audio.js        # Sound effects
+│       ├── timer.js        # Game timer
+│       ├── highscores.js   # Score storage
+│       └── locations.js    # CSUN building coords
+├── scripts/
+│   ├── encrypt-key.ts      # Optional encryption
+│   └── decrypt-key.ts      # Decryption helper
+└── build.js                # Bun build script
 
-1. **GitHub Secrets** - Key stored securely, not in repository
-2. **Domain Restrictions** - Google Cloud: only works on `jag18729.github.io`
-3. **API Restrictions** - Maps JavaScript API only
-4. **Build-Time Injection** - Key injected during build, not hardcoded
-5. **Optional Encryption** - AES-256-GCM at-rest encryption available
-
-See `docs/API_SECURITY.md` for details.
+docs/
+├── API_SECURITY.md         # How API key is protected
+├── BUN_ENCRYPTION_SETUP.md # Optional encryption guide
+└── ENCRYPTED_SECRETS.md    # Other encryption approaches
+```
 
 ---
 
-## Optional: Encrypt API Key
+## 🔐 API Key Security
 
-For additional security, encrypt your API key:
+Your Google Maps key is protected by:
+
+1. **GitHub Secrets** - Not in repository
+2. **Domain Restrictions** - Only works on jag18729.github.io
+3. **API Restrictions** - Maps JavaScript API only
+4. **Build-Time Injection** - Not hardcoded
+5. **Optional Encryption** - AES-256-GCM available
+
+**Details:** See `docs/API_SECURITY.md`
+
+---
+
+## 🔒 Optional: Encrypt API Key
+
+For extra security, encrypt your key at rest:
 
 ```bash
 cd frontend/scripts
@@ -131,121 +126,133 @@ bun encrypt-key.ts
 # Follow prompts, then:
 git add ../.env.encrypted
 git push
+# Add ENCRYPTION_PASSWORD to GitHub Secrets
 ```
 
-Then add `ENCRYPTION_PASSWORD` to GitHub Secrets. Build automatically decrypts during deployment.
+GitHub Actions automatically decrypts during deployment.
 
-See `docs/BUN_ENCRYPTION_SETUP.md` for complete guide.
-
----
-
-## Documentation
-
-All technical documentation is in `docs/`:
-
-| Document | Purpose |
-|----------|---------|
-| `docs/README.md` | Complete documentation index |
-| `docs/API_SECURITY.md` | Security implementation details |
-| `docs/BUN_ENCRYPTION_SETUP.md` | API key encryption guide |
-| `docs/ENCRYPTED_SECRETS.md` | Alternative encryption approaches |
+**Full guide:** See `docs/BUN_ENCRYPTION_SETUP.md`
 
 ---
 
-## Features
+## 🚀 Deployment Status
 
-✅ **Game Mechanics**
-- Double-click to hit baseballs on interactive map
-- Real-time scoring and timer
-- Sound effects (bat crack, homerun, strikeout, foul, game over)
-- Custom baseball bat cursor
-- 8+ CSS animations
-
-✅ **User Interface**
-- CSUN official logo in header
-- Responsive design (mobile + desktop)
-- High score leaderboard with persistent storage
-- Play-by-play result breakdown
-- Direct link to Matador Baseball Field on Google Maps
-- Retry button to play same locations again
-
-✅ **Development**
-- Bun 1.3 build system (bundling, minification, sourcemaps)
-- Local development server with hot reload
-- GitHub Actions CI/CD pipeline
-- Automated GitHub Pages deployment
-- Clean, modular JavaScript code
+| Feature | Status |
+|---------|--------|
+| Live Game | ✅ https://jag18729.github.io/GoogleMapsAPI/ |
+| CI/CD | ✅ GitHub Actions auto-deploy |
+| API Key | ✅ Secure (restricted) |
+| High Scores | ✅ Working |
+| Sound Effects | ✅ Working |
+| Encryption | ✅ Optional (ready) |
 
 ---
 
-## Performance
+## 🔧 Tech Stack
 
-- **Page Load:** < 2 seconds (optimized assets)
-- **Build Time:** < 5 seconds (Bun bundler)
-- **Game Loop:** 60 FPS (smooth animations)
-- **Network:** Single API call per location load
-- **Storage:** ~2KB for high scores (LocalStorage)
-
----
-
-## Browser Support
-
-- **Recommended:** Chrome/Edge (tested extensively)
-- **Supported:** Firefox, Safari, Opera
-- **Requirements:** ES2020+, Web Crypto API, Google Maps API access
+- **Bun 1.3** - JavaScript runtime + bundler
+- **Google Maps API** - Interactive map
+- **Web Audio API** - Browser-native sounds
+- **HTML5/CSS3/JS** - Frontend
+- **GitHub Pages** - Hosting
+- **GitHub Actions** - CI/CD
 
 ---
 
-## Troubleshooting
+## ❓ Troubleshooting
 
 **Game won't load?**
-- Check API key in .env (local) or GitHub Secrets (CI/CD)
-- Verify domain restrictions in Google Cloud Console
+- Check API key in `.env` (local) or GitHub Secrets
+- Verify Google Cloud domain restrictions are set
 - Check browser console for errors
 
 **Sound not working?**
-- Browsers require user interaction before playing audio
-- Click anywhere on the map first
-- Some ad blockers may disable Web Audio API
+- Click map first (browsers need user interaction)
+- Check ad blockers aren't blocking Web Audio
 
 **High scores not saving?**
-- Check browser LocalStorage is enabled
-- Clear cache if scores aren't updating
+- Enable LocalStorage in browser
 - Scores are device-specific (not synced)
 
 **Build fails?**
-- Ensure `.env` exists with valid API key
-- Run `bun install` to install dependencies
-- Check `build.js` output for specific errors
-
-See `docs/` for detailed troubleshooting guides.
+- Run `bun install`
+- Ensure `.env` has valid API key
 
 ---
 
-## Deployment Status
+## 📚 Documentation
 
-- **Live Game:** ✅ https://jag18729.github.io/GoogleMapsAPI/
-- **CI/CD:** ✅ GitHub Actions auto-deploy on push
-- **API Key:** ✅ Secure (domain + API restricted)
-- **High Scores:** ✅ Working (LocalStorage)
-- **Sound Effects:** ✅ Working (Web Audio API)
-- **Encryption:** ✅ Optional (AES-256-GCM ready)
-
----
-
-## What's Next?
-
-- **Encrypt API Key:** Follow `docs/BUN_ENCRYPTION_SETUP.md`
-- **Customize Locations:** Edit `frontend/src/js/locations.js`
-- **Add Features:** Modify game logic in `frontend/src/js/game.js`
-- **Deploy Changes:** Push to main branch, GitHub Actions handles it
+| Document | What It Covers |
+|----------|----------------|
+| `docs/API_SECURITY.md` | Security layers, risks, best practices |
+| `docs/BUN_ENCRYPTION_SETUP.md` | How to encrypt API key with AES-256-GCM |
+| `docs/ENCRYPTED_SECRETS.md` | 5 encryption approaches compared |
 
 ---
 
-## License
+## ✨ Features
 
-Educational project for CSUN COMP 484 - Google Maps API
+**Game Mechanics**
+- Double-click hitting on live map
+- Real-time scoring
+- Visual feedback (green/red overlays)
+- Foul zone detection
+- Play-by-play results
+
+**Audio & Visual**
+- 5 different sound effects
+- Custom bat cursor
+- 8+ CSS animations
+- CSUN branding
+- Professional theming
+
+**Developer**
+- Bun 1.3 build system
+- Local dev server
+- GitHub Actions CI/CD
+- Clean modular code
+- Comprehensive docs
+
+---
+
+## 🎯 Next Steps
+
+**Want to customize?**
+- Edit `frontend/src/js/locations.js` for custom spots
+- Modify `frontend/src/js/game.js` for game logic
+- Update `frontend/src/css/styles.css` for design
+
+**Want to encrypt?**
+- Follow `docs/BUN_ENCRYPTION_SETUP.md`
+
+**Want to deploy?**
+- `git push origin main` (automatic!)
+
+---
+
+## 📊 Performance
+
+- Page Load: < 2 seconds
+- Build Time: < 5 seconds
+- Game Loop: 60 FPS
+- High Scores: ~2KB (LocalStorage)
+
+---
+
+## 🌐 Browser Support
+
+✅ Chrome/Edge (recommended)
+✅ Firefox, Safari, Opera
+⚠️ Requires: ES2020+, Web Crypto API, Google Maps access
+
+---
+
+## 📜 License
+
+Educational project for CSUN COMP 484
 
 ---
 
 **Built with Bun 1.3 | Google Maps API | GitHub Pages**
+
+Ready to play? 🚀 Go to https://jag18729.github.io/GoogleMapsAPI/
