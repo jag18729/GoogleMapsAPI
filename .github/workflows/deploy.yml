@@ -38,6 +38,8 @@ jobs:
 
       - name: Build project
         working-directory: ./frontend
+        env:
+          ENCRYPTION_PASSWORD: ${{ secrets.ENCRYPTION_PASSWORD }}
         run: bun run build.js
 
       - name: Upload artifact

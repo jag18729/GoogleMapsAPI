@@ -7,22 +7,92 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+/**
+ * Decrypts an API key encrypted with AES-256-GCM
+ * Input: base64 encoded string containing salt (16) + iv (12) + ciphertext
+ */
+async function decryptSecret(encryptedBase64, password) {
+  const enc = new TextEncoder();
+  const dec = new TextDecoder();
+  
+  // Decode from base64
+  const encryptedData = Buffer.from(encryptedBase64, 'base64');
+  
+  // Extract components
+  const salt = encryptedData.slice(0, 16);
+  const iv = encryptedData.slice(16, 28);
+  const ciphertext = encryptedData.slice(28);
+  
+  // Derive key from password
+  const passwordKey = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(password),
+    'PBKDF2',
+    false,
+    ['deriveKey']
+  );
+  
+  const key = await crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt,
+      iterations: 310000,
+      hash: 'SHA-256'
+    },
+    passwordKey,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['decrypt']
+  );
+  
+  // Decrypt
+  const decrypted = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    ciphertext
+  );
+  
+  return dec.decode(decrypted);
+}
+
 // Load environment variables
-const envPath = join(__dirname, '../.env');
 let GOOGLE_MAPS_API_KEY = '';
 
-try {
-  const envContent = readFileSync(envPath, 'utf-8');
-  const match = envContent.match(/GOOGLE_MAPS_API_KEY=(.+)/);
-  if (match) {
-    GOOGLE_MAPS_API_KEY = match[1].trim();
-  } else {
-    console.error('GOOGLE_MAPS_API_KEY not found in .env file');
+if (process.env.ENCRYPTION_PASSWORD) {
+  // GitHub Actions: decrypt from encrypted file
+  console.log('🔐 Loading encrypted API key from .env.encrypted...');
+  try {
+    const encrypted = readFileSync(join(__dirname, '.env.encrypted'), 'utf-8').trim();
+    GOOGLE_MAPS_API_KEY = await decryptSecret(encrypted, process.env.ENCRYPTION_PASSWORD);
+    console.log('✓ API key decrypted successfully');
+  } catch (error) {
+    console.error('❌ Failed to decrypt API key:', error.message);
     process.exit(1);
   }
-} catch (error) {
-  console.error('Error reading .env file:', error.message);
-  console.error('Make sure .env file exists with GOOGLE_MAPS_API_KEY');
+} else {
+  // Local development: use plaintext .env
+  console.log('📝 Loading API key from .env (local development)...');
+  const envPath = join(__dirname, '../.env');
+  try {
+    const envContent = readFileSync(envPath, 'utf-8');
+    const match = envContent.match(/GOOGLE_MAPS_API_KEY=(.+)/);
+    if (match) {
+      GOOGLE_MAPS_API_KEY = match[1].trim();
+      console.log('✓ API key loaded from .env');
+    } else {
+      console.error('GOOGLE_MAPS_API_KEY not found in .env file');
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error('Error reading .env file:', error.message);
+    console.error('Make sure .env file exists with GOOGLE_MAPS_API_KEY or set ENCRYPTION_PASSWORD env var');
+    process.exit(1);
+  }
+}
+
+// Validate API key
+if (!GOOGLE_MAPS_API_KEY || GOOGLE_MAPS_API_KEY.length < 30) {
+  console.error('❌ Invalid API key (must be at least 30 characters)');
   process.exit(1);
 }
 
@@ -117,4 +187,5 @@ console.log(`📊 Build stats:
   - CSS: 2 files
   - JS: Bundled and minified
   - API Key: Injected ✓
+  - Encryption: ${process.env.ENCRYPTION_PASSWORD ? '🔐 AES-256-GCM' : '📝 Plaintext'}
 `);
