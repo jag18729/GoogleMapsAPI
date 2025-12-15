@@ -16,6 +16,7 @@ class QuizGame {
     this.highScoreManager = new HighScoreManager();
     this.audioManager = new AudioManager();
     this.lastGameState = null; // Store last game state for retry
+    this.promptShown = false; // Prevent double high score prompt
   }
 
   async init() {
@@ -74,6 +75,9 @@ class QuizGame {
     this.ui.hideResults();
     this.mapManager.clearOverlays();
     this.mapManager.clearMarkers();
+
+    // Reset prompt flag for new game
+    this.promptShown = false;
 
     // Initialize new game state
     this.gameState = new GameState(QUIZ_LOCATIONS);
@@ -157,8 +161,9 @@ class QuizGame {
       this.gameState.answers
     );
 
-    // Check for high score
+    // Check for high score (only prompt if not already shown this game)
     if (
+      !this.promptShown &&
       this.highScoreManager.isHighScore(
         this.gameState.score,
         QUIZ_LOCATIONS.length
@@ -179,6 +184,9 @@ class QuizGame {
     this.mapManager.clearOverlays();
     this.mapManager.clearMarkers();
 
+    // Reset prompt flag for retry
+    this.promptShown = false;
+
     // Initialize new game state (fresh attempt)
     this.gameState = new GameState(QUIZ_LOCATIONS);
     this.gameState.startGame();
@@ -193,6 +201,9 @@ class QuizGame {
   }
 
   promptForHighScore(timeElapsed) {
+    // Set flag to prevent double prompt
+    this.promptShown = true;
+
     const playerName = prompt(
       'Congratulations! Enter your name for the high score board:'
     );
