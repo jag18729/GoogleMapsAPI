@@ -16,26 +16,39 @@ export class GameState {
 
   submitAnswer(clickedLat, clickedLng) {
     const currentLocation = this.getCurrentLocation();
-    // For baseball game: OUTSIDE field bounds = HOMERUN (correct)
-    // INSIDE field bounds = OUT (incorrect)
+
+    // Check for foul ball (soccer field and buildings above)
+    const isFoulBall = currentLocation.foulZones &&
+      currentLocation.foulZones.some(zone =>
+        this.isWithinBounds(clickedLat, clickedLng, zone)
+      );
+
+    // For baseball game:
+    // OUTSIDE field & NOT foul = HOMERUN (correct)
+    // INSIDE field = STRIKEOUT (incorrect)
+    // Foul ball = FOUL (counts as strike)
     const isOutsideBounds = !this.isWithinBounds(
       clickedLat,
       clickedLng,
       currentLocation.bounds
     );
 
+    const isHomerun = isOutsideBounds && !isFoulBall;
+
     this.answers.push({
       location: currentLocation,
       userClick: { lat: clickedLat, lng: clickedLng },
-      correct: isOutsideBounds,
+      correct: isHomerun,
+      isFoulBall: isFoulBall,
+      isStrikeout: !isOutsideBounds,
       timestamp: Date.now()
     });
 
-    if (isOutsideBounds) {
+    if (isHomerun) {
       this.score++;
     }
 
-    return isOutsideBounds;
+    return isHomerun;
   }
 
   isWithinBounds(lat, lng, bounds) {

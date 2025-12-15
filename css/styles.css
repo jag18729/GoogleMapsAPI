@@ -21,6 +21,11 @@ body {
   background-color: var(--background);
   color: var(--text-color);
   line-height: 1.6;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-45)"><rect x="9" y="2" width="6" height="18" fill="%23333" rx="3"/><circle cx="12" cy="2" r="2" fill="%23d22630"/></g></svg>') 12 4, auto;
+}
+
+.map-container {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="rotate(-45)"><rect x="9" y="2" width="6" height="18" fill="%23d22630" rx="3"/><circle cx="12" cy="2" r="3" fill="%23FFD700"/></g></svg>') 12 4, auto;
 }
 
 /* Game Container */

@@ -5,6 +5,7 @@ import { MapManager } from './map.js';
 import { UIController } from './ui.js';
 import { Timer } from './timer.js';
 import { HighScoreManager } from './highscores.js';
+import { AudioManager } from './audio.js';
 
 class QuizGame {
   constructor() {
@@ -13,12 +14,16 @@ class QuizGame {
     this.ui = new UIController();
     this.timer = new Timer((seconds) => this.ui.updateTimer(seconds));
     this.highScoreManager = new HighScoreManager();
+    this.audioManager = new AudioManager();
     this.lastGameState = null; // Store last game state for retry
   }
 
   async init() {
     try {
       this.ui.showLoadingSpinner();
+
+      // Initialize audio manager (will activate on first click)
+      this.audioManager.init();
 
       // Initialize map (Google Maps already loaded via script tag)
       this.mapManager = new MapManager('map');
@@ -91,16 +96,32 @@ class QuizGame {
   handleMapClick(lat, lng) {
     if (!this.gameState.isGameActive) return;
 
+    // Play bat crack sound effect
+    this.audioManager.playCrackSound();
+
     const isCorrect = this.gameState.submitAnswer(lat, lng);
     const currentLocation = this.gameState.getCurrentLocation();
+    const lastAnswer = this.gameState.answers[this.gameState.answers.length - 1];
 
-    // Show visual feedback
+    // Play result sound based on outcome
+    if (lastAnswer.isFoulBall) {
+      this.audioManager.playFoulSound();
+    } else if (lastAnswer.isStrikeout) {
+      this.audioManager.playStrikeoutSound();
+    } else if (isCorrect) {
+      this.audioManager.playHomerunSound();
+    }
+
+    // Show visual feedback with answer data (for strikes/fouls)
     this.mapManager.showOverlay(currentLocation.bounds, isCorrect);
-    this.ui.showFeedback(isCorrect, currentLocation.name);
+    this.ui.showFeedback(isCorrect, currentLocation.name, lastAnswer);
     this.ui.updateScore(this.gameState.score, QUIZ_LOCATIONS.length);
 
-    // Add marker for user's click
-    this.mapManager.addMarker(lat, lng, isCorrect ? '✓' : '✗');
+    // Add marker for user's click with appropriate icon
+    let icon = '✓';
+    if (lastAnswer.isFoulBall) icon = '⚾';
+    else if (lastAnswer.isStrikeout) icon = '❌';
+    this.mapManager.addMarker(lat, lng, icon);
 
     // Proceed to next question or end game
     setTimeout(() => {
@@ -115,6 +136,9 @@ class QuizGame {
   endGame() {
     this.gameState.endGame();
     this.timer.stop();
+
+    // Play game over sound
+    this.audioManager.playGameOverSound();
 
     const timeElapsed = this.gameState.getElapsedTime();
 
