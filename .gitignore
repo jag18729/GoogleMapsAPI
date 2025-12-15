@@ -36,3 +36,32 @@ yarn-error.log*
 # Testing
 coverage/
 .nyc_output/
+
+# Encryption Demo (local development only - do not commit)
+frontend/scripts/.env.gpg
+frontend/scripts/.env.encrypted
+frontend/scripts/gpg-encrypt.sh
+frontend/scripts/gpg-decrypt.sh
+frontend/scripts/bun-encrypt.ts
+frontend/scripts/bun-decrypt.ts
+frontend/scripts/DEMO.md
+frontend/scripts/BUN_DEMO.md
+frontend/scripts/QUICKREF.txt
+frontend/scripts/COMPARISON.md
+frontend/scripts/IMPLEMENTATION_SUMMARY.md
+GPG_DEMO_SUMMARY.md
+
+# Encryption documentation (demo only)
+docs/GPG_ENCRYPTION_DEMO.md
+docs/BUN_ENCRYPTION_SETUP.md
+
+# Encrypted API key files (local testing only)
+frontend/.env.encrypted
+
+# Remove these after consolidation
+frontend/scripts/DEMO.md
+frontend/scripts/BUN_DEMO.md
+frontend/scripts/COMPARISON.md
+frontend/scripts/IMPLEMENTATION_SUMMARY.md
+frontend/scripts/README.md
+frontend/.env.demo
